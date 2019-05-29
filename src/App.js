@@ -1,4 +1,5 @@
 import React from 'react';
+import './App.css';
 
 const initialData = [
   {
@@ -12,6 +13,8 @@ const initialData = [
     completed: false
   }
 ];
+
+// const body = document.body;
 
 class App extends React.Component {
   // you will need a place to store your state in this component.
@@ -38,33 +41,41 @@ class App extends React.Component {
       completed: false
     };
 
-    this.setState({
-      toDoList: this.state.toDoList.concat(newtask),
-      task: ''
-    });
+    if (newtask.task) {
+      this.setState({
+        toDoList: this.state.toDoList.concat(newtask),
+        task: ''
+      });
+    }
   };
 
   clearCompleted = () => {
     console.log('clear completed');
-    const newTaskList = this.state.toDoList.filter(task => task.completed === false);
+    const newTaskList = this.state.toDoList.filter(
+      task => task.completed === false
+    );
     this.setState({
-      toDoList: newTaskList,
+      toDoList: newTaskList
     });
-  }
-
+  };
 
   log = () => {
-      console.log(this.state.toDoList);
-  }
+    console.log(this.state.toDoList);
+  };
 
   render() {
     return (
       <div>
         <h2>To Do List</h2>
         {this.state.toDoList.map(taskObj => (
-          <div key={taskObj.id}>
+          <div
+            key={taskObj.id}
+            onClick={event => {
+              taskObj.completed = !taskObj.completed;
+              // event.target.style['text-decoration-line'] = 'line-through';
+              event.target.classList.toggle('line');
+            }}>
             {taskObj.task}
-            <button onClick={() => taskObj.completed = !taskObj.completed}>{taskObj.completed.toString()}</button>
           </div>
         ))}
 
