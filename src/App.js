@@ -44,10 +44,14 @@ class App extends React.Component {
     });
   };
 
-  markComplete = id => {
-    console.log(id);
-    console.log('done');
-  };
+  clearCompleted = () => {
+    console.log('clear completed');
+    const newTaskList = this.state.toDoList.filter(task => task.completed === false);
+    this.setState({
+      toDoList: newTaskList,
+    });
+  }
+
 
   log = () => {
       console.log(this.state.toDoList);
@@ -60,7 +64,6 @@ class App extends React.Component {
         {this.state.toDoList.map(taskObj => (
           <div key={taskObj.id}>
             {taskObj.task}
-            {/* <button onClick={() => this.markComplete(taskObj.id)}>Done</button> */}
             <button onClick={() => taskObj.completed = !taskObj.completed}>{taskObj.completed.toString()}</button>
           </div>
         ))}
@@ -69,6 +72,7 @@ class App extends React.Component {
           task={this.state.task}
           changeHandler={this.changeHandler}
           addTask={this.addTask}
+          clearCompleted={this.clearCompleted}
         />
 
         <button onClick={this.log}>log</button>
@@ -77,11 +81,12 @@ class App extends React.Component {
   }
 }
 
-function TaskAdder({ task, changeHandler, addTask }) {
+function TaskAdder({ task, changeHandler, addTask, clearCompleted }) {
   return (
     <div>
       <input value={task} onChange={changeHandler} type="text" />
       <button onClick={addTask}>Add Task</button>
+      <button onClick={clearCompleted}>Clear Completed</button>
     </div>
   );
 }
