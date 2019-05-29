@@ -21,7 +21,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       toDoList: initialData,
-      task: 'start here',
+      task: 'start here'
     };
   }
 
@@ -35,7 +35,7 @@ class App extends React.Component {
     const newtask = {
       task: this.state.task,
       id: Date.now(),
-      completed: false,
+      completed: false
     };
 
     this.setState({
@@ -44,14 +44,22 @@ class App extends React.Component {
     });
   };
 
+  markComplete = id => {
+    console.log(id);
+    console.log('done');
+  };
+
   render() {
     return (
       <div>
         <h2>To Do List</h2>
         {this.state.toDoList.map(taskObj => (
-          <div key={taskObj.id}>{taskObj.task}</div>
-          // <div>{taskObj.task}</div>
+          <div key={taskObj.id}>
+            {taskObj.task}
+            <button onClick={() => this.markComplete(taskObj.id)}>Done</button>
+          </div>
         ))}
+
         <TaskAdder
           task={this.state.task}
           changeHandler={this.changeHandler}
