@@ -14,8 +14,6 @@ const initialData = [
   }
 ];
 
-// const body = document.body;
-
 class App extends React.Component {
   // you will need a place to store your state in this component.
   // design `App` to be the parent component of your application.
@@ -24,7 +22,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       toDoList: initialData,
-      task: 'start here'
+      task: 'Add a new Task'
     };
   }
 
@@ -50,7 +48,7 @@ class App extends React.Component {
   };
 
   clearCompleted = () => {
-    console.log('clear completed');
+    // console.log('clear completed');
     const newTaskList = this.state.toDoList.filter(
       task => task.completed === false
     );
@@ -59,9 +57,9 @@ class App extends React.Component {
     });
   };
 
-  log = () => {
-    console.log(this.state.toDoList);
-  };
+  // log = () => {
+  //   console.log(this.state.toDoList);
+  // };
 
   render() {
     return (
@@ -72,7 +70,6 @@ class App extends React.Component {
             key={taskObj.id}
             onClick={event => {
               taskObj.completed = !taskObj.completed;
-              // event.target.style['text-decoration-line'] = 'line-through';
               event.target.classList.toggle('line');
             }}>
             {taskObj.task}
@@ -86,7 +83,7 @@ class App extends React.Component {
           clearCompleted={this.clearCompleted}
         />
 
-        <button onClick={this.log}>log</button>
+        {/* <button onClick={this.log}>log</button> */}
       </div>
     );
   }
