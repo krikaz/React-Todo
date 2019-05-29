@@ -49,6 +49,10 @@ class App extends React.Component {
     console.log('done');
   };
 
+  log = () => {
+      console.log(this.state.toDoList);
+  }
+
   render() {
     return (
       <div>
@@ -56,7 +60,8 @@ class App extends React.Component {
         {this.state.toDoList.map(taskObj => (
           <div key={taskObj.id}>
             {taskObj.task}
-            <button onClick={() => this.markComplete(taskObj.id)}>Done</button>
+            {/* <button onClick={() => this.markComplete(taskObj.id)}>Done</button> */}
+            <button onClick={() => taskObj.completed = !taskObj.completed}>{taskObj.completed.toString()}</button>
           </div>
         ))}
 
@@ -65,6 +70,8 @@ class App extends React.Component {
           changeHandler={this.changeHandler}
           addTask={this.addTask}
         />
+
+        <button onClick={this.log}>log</button>
       </div>
     );
   }
