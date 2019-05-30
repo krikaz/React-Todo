@@ -24,7 +24,6 @@ class App extends React.Component {
     this.state = {
       toDoList: initialData,
       newTask: 'Add a new Todo',
-      currentFriendId: null
     };
   }
 
@@ -70,6 +69,12 @@ class App extends React.Component {
     console.log(this.state.toDoList);
   };
 
+  save = () => {
+    const myStorage = window.localStorage;
+    myStorage.setItem(JSON.stringify(this.state.toDoList));
+    console.log(myStorage);
+  }
+
   render() {
     return (
       <div>
@@ -87,6 +92,8 @@ class App extends React.Component {
         />
 
         <button onClick={this.log}>log</button>
+        <button onClick={this.save}>save</button>
+
       </div>
     );
   }
