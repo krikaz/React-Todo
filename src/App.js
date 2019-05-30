@@ -58,12 +58,30 @@ class App extends React.Component {
     });
   };
 
+  // changeCompleted = event => {
+  //   this.state.toDoList.
+  // }
+
+  log = () => {
+    console.log(this.state.toDoList);
+  };
+
   render() {
     return (
       <div>
         <h2>To Do List</h2>
         {/* TodoList(this.state.toDoList); */}
-        TodoList({this.state.toDoList});
+        {/* {this.state.toDoList.map(taskObj => (
+          <div
+            key={taskObj.id}
+            onClick={event => {
+              taskObj.completed = !taskObj.completed;
+              event.target.classList.toggle('line');
+            }}>
+            {taskObj.task}
+          </div>
+        ))} */}
+        <TodoList toDoList={this.state.toDoList} />
 
         <TaskAdder
           task={this.state.task}
@@ -72,11 +90,10 @@ class App extends React.Component {
           clearCompleted={this.clearCompleted}
         />
 
+        <button onClick={this.log}>log</button>
       </div>
     );
   }
 }
-
-
 
 export default App;
