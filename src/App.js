@@ -24,43 +24,50 @@ class App extends React.Component {
     super(props);
     this.state = {
       toDoList: initialData,
-      task: 'Add a new Task'
+      task: 'Add a new Todo'
     };
   }
 
   changeHandler = event => {
     this.setState({
-      task: event.target.value
+      todo: event.target.value
     });
   };
 
-  addTask = () => {
-    const newTask = {
+  addTodo = () => {
+    const newTodo = {
       task: this.state.task,
       id: Date.now(),
       completed: false
     };
 
-    if (newTask.task) {
+    if (newTodo.task) {
       this.setState(state => ({
-        toDoList: state.toDoList.concat(newTask),
+        toDoList: state.toDoList.concat(newTodo),
         task: ''
       }));
     }
   };
 
   clearCompleted = () => {
-    const newTaskList = this.state.toDoList.filter(
-      task => task.completed === false
+    const newTodoList = this.state.toDoList.filter(
+      todo => todo.completed === false
     );
     this.setState({
-      toDoList: newTaskList
+      toDoList: newTodoList
     });
   };
 
-  // changeCompleted = event => {
-  //   this.state.toDoList.
-  // }
+  changeCompleted = id => {
+    this.setState({
+      toDoList: this.state.toDoList.map(todo => {
+        if (todo.id === id) {
+          todo.completed = true;
+        }
+        return todo;
+      })
+    });
+  };
 
   log = () => {
     console.log(this.state.toDoList);
@@ -81,12 +88,15 @@ class App extends React.Component {
             {taskObj.task}
           </div>
         ))} */}
-        <TodoList toDoList={this.state.toDoList} />
+        <TodoList
+          toDoList={this.state.toDoList}
+          onComplete={this.changeCompleted}
+        />
 
         <TaskAdder
           task={this.state.task}
           changeHandler={this.changeHandler}
-          addTask={this.addTask}
+          addTodo={this.addTodo}
           clearCompleted={this.clearCompleted}
         />
 
