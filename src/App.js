@@ -1,7 +1,6 @@
 import React from 'react';
 import TaskAdder from './components/TodoComponents/TodoForm';
 import TodoList from './components/TodoComponents/TodoList';
-import './App.css';
 
 const initialData = [
   {
@@ -24,28 +23,28 @@ class App extends React.Component {
     super(props);
     this.state = {
       toDoList: initialData,
-      task: 'Add a new Todo',
+      newTask: 'Add a new Todo',
       currentFriendId: null
     };
   }
 
   changeHandler = event => {
     this.setState({
-      task: event.target.value
+      newTask: event.target.value
     });
   };
 
   addTodo = () => {
     this.setState(state => {
       const newTodo = {
-        task: state.task,
+        task: state.newTask,
         id: Date.now(),
         completed: false
       };
 
       return {
         toDoList: state.toDoList.concat(newTodo),
-        task: ''
+        newTask: ''
       };
     });
   };
@@ -75,10 +74,13 @@ class App extends React.Component {
     return (
       <div>
         <h2>To Do List</h2>
-        <TodoList toDoList={this.state.toDoList} markCompleted={this.markCompleted}/>
+        <TodoList
+          toDoList={this.state.toDoList}
+          markCompleted={this.markCompleted}
+        />
 
         <TaskAdder
-          task={this.state.task}
+          newTask={this.state.newTask}
           changeHandler={this.changeHandler}
           addTodo={this.addTodo}
           clearCompleted={this.clearCompleted}

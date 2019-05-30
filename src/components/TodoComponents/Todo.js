@@ -1,14 +1,11 @@
 import React from 'react';
+import './Todo.css';
 
-export default function Todo({id, task, markCompleted }) {
+export default function Todo({ todo, markCompleted }) {
   const onClickedCompleted = event => {
     event.target.classList.toggle('line');
-    markCompleted(id);
+    markCompleted(todo.id);
   };
 
-  return (
-    <div key={id} onClick={onClickedCompleted}>
-      {task}
-    </div>
-  );
+  return <div onClick={onClickedCompleted}>{todo.task}</div>;
 }

@@ -4,15 +4,10 @@
 import React from 'react';
 import Todo from './Todo';
 
-export default function TodoList({toDoList, markCompleted}) {
+export default function TodoList({ toDoList, markCompleted }) {
+  const result = toDoList.map(todo => (
+    <Todo key={todo.id} todo={todo} markCompleted={markCompleted} />
+  ));
 
-  const result = toDoList.map(todo => 
-    <Todo id={todo.id} task={todo.task} markCompleted={markCompleted}/>
-  );
-
-  return (
-    <div>
-      {result}
-    </div>
-  );
+  return <div>{result}</div>;
 }
