@@ -24,49 +24,47 @@ class App extends React.Component {
     super(props);
     this.state = {
       toDoList: initialData,
-      task: 'Add a new Todo'
+      task: 'Add a new Todo',
+      currentFriendId: null
     };
   }
 
   changeHandler = event => {
     this.setState({
-      todo: event.target.value
+      task: event.target.value
     });
   };
 
   addTodo = () => {
-    const newTodo = {
-      task: this.state.task,
-      id: Date.now(),
-      completed: false
-    };
+    this.setState(state => {
+      const newTodo = {
+        task: state.task,
+        id: Date.now(),
+        completed: false
+      };
 
-    if (newTodo.task) {
-      this.setState(state => ({
+      return {
         toDoList: state.toDoList.concat(newTodo),
         task: ''
-      }));
-    }
-  };
-
-  clearCompleted = () => {
-    const newTodoList = this.state.toDoList.filter(
-      todo => todo.completed === false
-    );
-    this.setState({
-      toDoList: newTodoList
+      };
     });
   };
 
-  changeCompleted = id => {
-    this.setState({
-      toDoList: this.state.toDoList.map(todo => {
+  markCompleted = id => {
+    this.setState(state => ({
+      toDoList: state.toDoList.map(todo => {
         if (todo.id === id) {
-          todo.completed = true;
+          todo.completed = !todo.completed;
         }
         return todo;
       })
-    });
+    }));
+  };
+
+  clearCompleted = () => {
+    this.setState(state => ({
+      toDoList: state.toDoList.filter(todo => todo.completed === false)
+    }));
   };
 
   log = () => {
@@ -77,21 +75,7 @@ class App extends React.Component {
     return (
       <div>
         <h2>To Do List</h2>
-        {/* TodoList(this.state.toDoList); */}
-        {/* {this.state.toDoList.map(taskObj => (
-          <div
-            key={taskObj.id}
-            onClick={event => {
-              taskObj.completed = !taskObj.completed;
-              event.target.classList.toggle('line');
-            }}>
-            {taskObj.task}
-          </div>
-        ))} */}
-        <TodoList
-          toDoList={this.state.toDoList}
-          onComplete={this.changeCompleted}
-        />
+        <TodoList toDoList={this.state.toDoList} markCompleted={this.markCompleted}/>
 
         <TaskAdder
           task={this.state.task}

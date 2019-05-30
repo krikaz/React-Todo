@@ -4,19 +4,14 @@
 import React from 'react';
 import Todo from './Todo';
 
-export default function TodoList({toDoList, onComplete}) {
-  // const result = toDoList.map(taskObj => {<Todo id={taskObj.id} task={taskObj.task} completed={taskObj.completed} />});
-  // const result = <Todo id={toDoList[0].id} task={toDoList[0].task} completed={toDoList[0].completed} />
-  // const result1 = <Todo id={toDoList[1].id} task={toDoList[1].task} completed={toDoList[1].completed} />
+export default function TodoList({toDoList, markCompleted}) {
 
-  const result = toDoList.map(taskObj => 
-    <Todo key={taskObj.id} task={taskObj.task} completed={taskObj.completed} onComplete={onComplete}/>
+  const result = toDoList.map(todo => 
+    <Todo id={todo.id} task={todo.task} markCompleted={markCompleted}/>
   );
 
   return (
     <div>
-      {/* {result}
-      {result1} */}
       {result}
     </div>
   );

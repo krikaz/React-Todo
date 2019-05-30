@@ -1,9 +1,9 @@
 import React from 'react';
 
-export default function Todo({id, task, onComplete }) {
+export default function Todo({id, task, markCompleted }) {
   const onClickedCompleted = event => {
-    onComplete(id);
     event.target.classList.toggle('line');
+    markCompleted(id);
   };
 
   return (
