@@ -1,5 +1,6 @@
 import React from 'react';
-import './App.css';
+import TaskAdder from './components/TodoComponents/TodoForm';
+import TodoList from './components/TodoComponents/TodoList';
 
 const initialData = [
   {
@@ -22,81 +23,80 @@ class App extends React.Component {
     super(props);
     this.state = {
       toDoList: initialData,
-      task: 'Add a new Task'
+      newTask: 'Add a new Todo',
     };
   }
 
   changeHandler = event => {
     this.setState({
-      task: event.target.value
+      newTask: event.target.value
     });
   };
 
-  addTask = () => {
-    const newtask = {
-      task: this.state.task,
-      id: Date.now(),
-      completed: false
-    };
+  addTodo = () => {
+    this.setState(state => {
+      const newTodo = {
+        task: state.newTask,
+        id: Date.now(),
+        completed: false
+      };
 
-    if (newtask.task) {
-      this.setState({
-        toDoList: this.state.toDoList.concat(newtask),
-        task: ''
-      });
-    }
+      return {
+        toDoList: state.toDoList.concat(newTodo),
+        newTask: ''
+      };
+    });
+  };
+
+  markCompleted = id => {
+    this.setState(state => ({
+      toDoList: state.toDoList.map(todo => {
+        if (todo.id === id) {
+          todo.completed = !todo.completed;
+        }
+        return todo;
+      })
+    }));
   };
 
   clearCompleted = () => {
-    // console.log('clear completed');
-    const newTaskList = this.state.toDoList.filter(
-      task => task.completed === false
-    );
-    this.setState({
-      toDoList: newTaskList
-    });
+    this.setState(state => ({
+      toDoList: state.toDoList.filter(todo => todo.completed === false)
+    }));
   };
 
-  // log = () => {
-  //   console.log(this.state.toDoList);
-  // };
+  log = () => {
+    console.log(this.state.toDoList);
+  };
+
+  save = () => {
+    const myStorage = window.localStorage;
+    myStorage.setItem(JSON.stringify(this.state.toDoList));
+    console.log(myStorage);
+  }
 
   render() {
     return (
       <div>
         <h2>To Do List</h2>
-        {this.state.toDoList.map(taskObj => (
-          <div
-            key={taskObj.id}
-            onClick={event => {
-              taskObj.completed = !taskObj.completed;
-              event.target.classList.toggle('line');
-            }}>
-            {taskObj.task}
-          </div>
-        ))}
+        <TodoList
+          toDoList={this.state.toDoList}
+          markCompleted={this.markCompleted}
+        />
 
         <TaskAdder
-          task={this.state.task}
+          newTask={this.state.newTask}
           changeHandler={this.changeHandler}
-          addTask={this.addTask}
+          addTodo={this.addTodo}
           clearCompleted={this.clearCompleted}
         />
 
-        {/* <button onClick={this.log}>log</button> */}
+        <button onClick={this.log}>log</button>
+        <button onClick={this.save}>save</button>
+
       </div>
     );
   }
-}
-
-function TaskAdder({ task, changeHandler, addTask, clearCompleted }) {
-  return (
-    <div>
-      <input value={task} onChange={changeHandler} type="text" />
-      <button onClick={addTask}>Add Task</button>
-      <button onClick={clearCompleted}>Clear Completed</button>
-    </div>
-  );
 }
 
 export default App;
