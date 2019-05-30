@@ -1,5 +1,6 @@
 import React from 'react';
 import TaskAdder from './components/TodoComponents/TodoForm';
+import TodoList from './components/TodoComponents/TodoList';
 import './App.css';
 
 const initialData = [
@@ -61,16 +62,8 @@ class App extends React.Component {
     return (
       <div>
         <h2>To Do List</h2>
-        {this.state.toDoList.map(taskObj => (
-          <div
-            key={taskObj.id}
-            onClick={event => {
-              taskObj.completed = !taskObj.completed;
-              event.target.classList.toggle('line');
-            }}>
-            {taskObj.task}
-          </div>
-        ))}
+        {/* TodoList(this.state.toDoList); */}
+        TodoList({this.state.toDoList});
 
         <TaskAdder
           task={this.state.task}
