@@ -1,4 +1,5 @@
 import React from 'react';
+import TaskAdder from './components/TodoComponents/TodoForm';
 import './App.css';
 
 const initialData = [
@@ -33,22 +34,21 @@ class App extends React.Component {
   };
 
   addTask = () => {
-    const newtask = {
+    const newTask = {
       task: this.state.task,
       id: Date.now(),
       completed: false
     };
 
-    if (newtask.task) {
-      this.setState({
-        toDoList: this.state.toDoList.concat(newtask),
+    if (newTask.task) {
+      this.setState(state => ({
+        toDoList: state.toDoList.concat(newTask),
         task: ''
-      });
+      }));
     }
   };
 
   clearCompleted = () => {
-    // console.log('clear completed');
     const newTaskList = this.state.toDoList.filter(
       task => task.completed === false
     );
@@ -56,10 +56,6 @@ class App extends React.Component {
       toDoList: newTaskList
     });
   };
-
-  // log = () => {
-  //   console.log(this.state.toDoList);
-  // };
 
   render() {
     return (
@@ -83,20 +79,11 @@ class App extends React.Component {
           clearCompleted={this.clearCompleted}
         />
 
-        {/* <button onClick={this.log}>log</button> */}
       </div>
     );
   }
 }
 
-function TaskAdder({ task, changeHandler, addTask, clearCompleted }) {
-  return (
-    <div>
-      <input value={task} onChange={changeHandler} type="text" />
-      <button onClick={addTask}>Add Task</button>
-      <button onClick={clearCompleted}>Clear Completed</button>
-    </div>
-  );
-}
+
 
 export default App;
